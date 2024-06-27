@@ -17,10 +17,10 @@ const selectedWhite = "o"
 const selectedE1 = "i"
 const selectedE2 = "t"
 
-const turn = "w"
+// const turn = "w"
 
 setLegend(
-  [ emptyField1, bitmap`
+  [emptyField1, bitmap`
 9999999999999999
 9999999999999999
 9999999999999999
@@ -36,8 +36,8 @@ setLegend(
 9999999999999999
 9999999999999999
 9999999999999999
-9999999999999999` ],
-  [ emptyField2, bitmap`
+9999999999999999`],
+  [emptyField2, bitmap`
 CCCCCCCCCCCCCCCC
 CCCCCCCCCCCCCCCC
 CCCCCCCCCCCCCCCC
@@ -54,7 +54,7 @@ CCCCCCCCCCCCCCCC
 CCCCCCCCCCCCCCCC
 CCCCCCCCCCCCCCCC
 CCCCCCCCCCCCCCCC`],
-  [ redChecker, bitmap`
+  [redChecker, bitmap`
 CCCCCCCCCCCCCCCC
 CCCCCCCCCCCCCCCC
 CCCCC333333CCCCC
@@ -71,7 +71,7 @@ CCC3333333333CCC
 CCCCC333333CCCCC
 CCCCCCCCCCCCCCCC
 CCCCCCCCCCCCCCCC`],
-  [ whiteChecker, bitmap`
+  [whiteChecker, bitmap`
 CCCCCCCCCCCCCCCC
 CCCCCCCCCCCCCCCC
 CCCCC222222CCCCC
@@ -88,7 +88,7 @@ CCC2222222222CCC
 CCCCC222222CCCCC
 CCCCCCCCCCCCCCCC
 CCCCCCCCCCCCCCCC`],
-  [ selectedRed, bitmap`
+  [selectedRed, bitmap`
 4444444444444444
 4CCCCCCCCCCCCCC4
 4CCCC333333CCCC4
@@ -105,7 +105,7 @@ CCCCCCCCCCCCCCCC`],
 4CCCC333333CCCC4
 4CCCCCCCCCCCCCC4
 4444444444444444`],
-  [ selectedWhite, bitmap`
+  [selectedWhite, bitmap`
 4444444444444444
 4CCCCCCCCCCCCCC4
 4CCCC222222CCCC4
@@ -122,7 +122,7 @@ CCCCCCCCCCCCCCCC`],
 4CCCC222222CCCC4
 4CCCCCCCCCCCCCC4
 4444444444444444`],
-  [ selectedE1, bitmap`
+  [selectedE1, bitmap`
 4444444444444444
 4999999999999994
 4999999999999994
@@ -138,8 +138,8 @@ CCCCCCCCCCCCCCCC`],
 4999999999999994
 4999999999999994
 4999999999999994
-4444444444444444` ],
-  [ selectedE2, bitmap`
+4444444444444444`],
+  [selectedE2, bitmap`
 4444444444444444
 4CCCCCCCCCCCCCC4
 4CCCCCCCCCCCCCC4
@@ -155,7 +155,7 @@ CCCCCCCCCCCCCCCC`],
 4CCCCCCCCCCCCCC4
 4CCCCCCCCCCCCCC4
 4CCCCCCCCCCCCCC4
-4444444444444444` ]
+4444444444444444`]
 )
 
 // setSolids([])
@@ -163,9 +163,9 @@ CCCCCCCCCCCCCCCC`],
 let level = 0
 const levels = [
   map`
-blblblbl
-lblblblb
-blblblbl
+rlrlrlrl
+lrlrlrlr
+rlrlrlrl
 ldldldld
 dldldldl
 lwlwlwlw
@@ -182,18 +182,18 @@ setMap(levels[level])
 
 onInput("w", () => {
 
-  if(!getAll(selectedWhite).length > 0) {
+  // if (!getAll(selectedWhite).length > 0) {
 
-    // if() {}
-    clearTile(0, 7)
-    addSprite(0, 7, selectedWhite)
-    
-  } else {
-    // Move selectedRed one block upwards
-  }
-  
+  //   // if() {}
+  //   clearTile(0, 7)
+  //   addSprite(0, 7, selectedWhite)
+
+  // } else {
+  //   // Move selectedRed one block upwards
+  // }
+
 })
 
 afterInput(() => {
-  
+
 })
