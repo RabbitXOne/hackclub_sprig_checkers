@@ -21,6 +21,8 @@ const selectedWhiteN = "f"
 
 var turn = "w"
 
+// Add an option to play with friend or vs computer?
+
 setLegend(
   [emptyField1, bitmap`
 9999999999999999
@@ -218,75 +220,181 @@ setMap(levels[level])
 
 onInput("w", () => {
 
-  if(turn === "w") {
-
-    // if (!getAll(selectedWhite).length > 0) {
-    //   // ERROR
-    // }
-
-    var currentSprite = ""
-    
-    if(getFirst(selectedWhite)) {
-      currentSprite = selectedWhite
-    } else if(getFirst(selectedRedN)) {
-      currentSprite = selectedRedN
-    } else if(getFirst(selectedE1N)) {
-      currentSprite = selectedE1N
-    } else if(getFirst(selectedE2N)) {
-      currentSprite = selectedE2N
-    }
-    
-    const currentX = getFirst(currentSprite).x
-    const currentY = getFirst(currentSprite).y
-
-    // Rewrite this to switch-case method?
-    
-    // FROM: selectedWhite
-    if(currentSprite === selectedWhite) {
-      // TO: emptyField1
-      if(getTile(currentX, currentY-1).some(sprite => sprite.type === emptyField1)) {
-        clearTile(currentX, currentY-1)
-        clearTile(currentX, currentY)
-        addSprite(currentX, currentY-1, selectedE1N)
-        addSprite(currentX, currentY, whiteChecker)
-        
-        // TO: emptyField2
-      } else if(getTile(currentX, currentY-1).some(sprite => sprite.type === emptyField2)) {
-        clearTile(currentX, currentY-1)
-        clearTile(currentX, currentY)
-        addSprite(currentX, currentY-1, selectedE2N)
-        addSprite(currentX, currentY, whiteChecker)
-
-        // TO: redChecker
-      } else if(getTile(currentX, currentY-1).some(sprite => sprite.type === redChecker)) {
-        clearTile(currentX, currentY-1)
-        clearTile(currentX, currentY)
-        addSprite(currentX, currentY-1, selectedRedN)
-        addSprite(currentX, currentY, whiteChecker)
-
-        // TO: whiteChecker
-      } else if(getTile(currentX, currentY-1).some(sprite => sprite.type === redChecker)) {
-        clearTile(currentX, currentY-1)
-        clearTile(currentX, currentY)
-        addSprite(currentX, currentY-1, selectedWhite)
-        addSprite(currentX, currentY, whiteChecker)
-      }
-    }
-    
-    
-    
-    
-    
+  if(getFirst(selectedWhite)) {
+    currentSprite = selectedWhite
+  } else if(getFirst(selectedWhiteN)) {
+    currentSprite = selectedWhiteN
+  } else if(getFirst(selectedRed)) {
+    currentSprite = selectedRed
+  } else if(getFirst(selectedRedN)) {
+    currentSprite = selectedRedN
+  } else if(getFirst(selectedE1N)) {
+    currentSprite = selectedE1N
+  } else if(getFirst(selectedE2N)) {
+    currentSprite = selectedE2N
   }
   
+  const currentX = getFirst(currentSprite).x
+  const currentY = getFirst(currentSprite).y
+  spriteSelector(currentX, currentY, "w")
   
-
+  return;
+  
 })
 
-afterInput(() => {
-  // if(turn === "w") {
-  //   turn = "r"
-  // } else if(turn === "r") {
-  //   turn = "w"
+onInput("s", () => {
+
+  if(getFirst(selectedWhite)) {
+    currentSprite = selectedWhite
+  } else if(getFirst(selectedWhiteN)) {
+    currentSprite = selectedWhiteN
+  } else if(getFirst(selectedRed)) {
+    currentSprite = selectedRed
+  } else if(getFirst(selectedRedN)) {
+    currentSprite = selectedRedN
+  } else if(getFirst(selectedE1N)) {
+    currentSprite = selectedE1N
+  } else if(getFirst(selectedE2N)) {
+    currentSprite = selectedE2N
+  }
+  
+  const currentX = getFirst(currentSprite).x
+  const currentY = getFirst(currentSprite).y
+  spriteSelector(currentX, currentY, "s")
+  
+  return;
+  
+})
+
+onInput("a", () => {
+
+  if(getFirst(selectedWhite)) {
+    currentSprite = selectedWhite
+  } else if(getFirst(selectedWhiteN)) {
+    currentSprite = selectedWhiteN
+  } else if(getFirst(selectedRed)) {
+    currentSprite = selectedRed
+  } else if(getFirst(selectedRedN)) {
+    currentSprite = selectedRedN
+  } else if(getFirst(selectedE1N)) {
+    currentSprite = selectedE1N
+  } else if(getFirst(selectedE2N)) {
+    currentSprite = selectedE2N
+  }
+  
+  const currentX = getFirst(currentSprite).x
+  const currentY = getFirst(currentSprite).y
+  spriteSelector(currentX, currentY, "a")
+  
+  return;
+  
+})
+
+onInput("d", () => {
+
+  if(getFirst(selectedWhite)) {
+    currentSprite = selectedWhite
+  } else if(getFirst(selectedWhiteN)) {
+    currentSprite = selectedWhiteN
+  } else if(getFirst(selectedRed)) {
+    currentSprite = selectedRed
+  } else if(getFirst(selectedRedN)) {
+    currentSprite = selectedRedN
+  } else if(getFirst(selectedE1N)) {
+    currentSprite = selectedE1N
+  } else if(getFirst(selectedE2N)) {
+    currentSprite = selectedE2N
+  }
+  
+  const currentX = getFirst(currentSprite).x
+  const currentY = getFirst(currentSprite).y
+  spriteSelector(currentX, currentY, "d")
+  
+  return;
+  
+})
+
+onInput("j", () => {
+
+  // Here add a script to make a move
+  
+})
+
+function spriteSelector(xBefore, yBefore, direction) {
+
+  let xAfter = 0
+  let yAfter = 0
+  
+  if(direction === "w") {
+    xAfter = xBefore
+    yAfter = yBefore - 1
+  } else if(direction === "a") {
+    xAfter = xBefore - 1
+    yAfter = yBefore
+  } else if(direction === "s") {
+    xAfter = xBefore
+    yAfter = yBefore + 1
+  } else if(direction === "d") {
+    xAfter = xBefore + 1
+    yAfter = yBefore
+  }
+
+  const currentSprite = getTile(xBefore, yBefore)[0]
+  const nextSprite = getTile(xAfter, yAfter)[0]
+  
+  if(currentSprite.type === selectedWhite || currentSprite.type === selectedWhiteN) {
+    clearTile(xBefore, yBefore)
+    addSprite(xBefore, yBefore, whiteChecker)
+  } else if(currentSprite.type === selectedRed || currentSprite.type === selectedRedN) {
+    clearTile(xBefore, yBefore)
+    addSprite(xBefore, yBefore, redChecker)
+  } else if(currentSprite.type === selectedE1N) {
+    clearTile(xBefore, yBefore)
+    addSprite(xBefore, yBefore, emptyField1)
+  } else if(currentSprite.type === selectedE2N) {
+    clearTile(xBefore, yBefore)
+    addSprite(xBefore, yBefore, emptyField2)
+  }
+
+  if(nextSprite.type === whiteChecker) {
+    clearTile(xAfter, yAfter)
+    if(turn === "w") {
+
+      // Here add a check to see if the player can move selected pawn
+      addSprite(xAfter, yAfter, selectedWhite)
+      
+    } else {
+      addSprite(xAfter, yAfter, selectedWhiteN)
+    }
+  } else if(nextSprite.type === redChecker) {
+    clearTile(xAfter, yAfter)
+    addSprite(xAfter, yAfter, selectedRedN)
+  } else if(nextSprite.type === emptyField1) {
+    clearTile(xAfter, yAfter)
+    addSprite(xAfter, yAfter, selectedE1N)
+  } else if(nextSprite.type === emptyField2) {
+    clearTile(xAfter, yAfter)
+    addSprite(xAfter, yAfter, selectedE2N)
+  }
+  
+  // } else if(getTile(currentX, currentY-1).some(sprite => sprite.type === emptyField2)) {
+  //   clearTile(currentX, currentY-1)
+  //   clearTile(currentX, currentY)
+  //   addSprite(currentX, currentY-1, selectedE2N)
+  //   addSprite(currentX, currentY, selectedRedN)
+  // } else if(getTile(currentX, currentY-1).some(sprite => sprite.type === redChecker)) {
+  //   clearTile(currentX, currentY-1)
+  //   clearTile(currentX, currentY)
+  //   addSprite(currentX, currentY-1, selectedRedN)
+  //   addSprite(currentX, currentY, selectedRedN)
+  // } else if(getTile(currentX, currentY-1).some(sprite => sprite.type === whiteChecker)) {
+  //   clearTile(currentX, currentY-1)
+  //   clearTile(currentX, currentY)
+  //   addSprite(currentX, currentY-1, selectedWhite)
+  //   addSprite(currentX, currentY, selectedRedN)
   // }
+}
+
+afterInput(() => {
+  // Check if one of the players has won
 })
