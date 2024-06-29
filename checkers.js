@@ -18,6 +18,12 @@ const selectedE1N = "i"
 const selectedE2N = "t"
 const selectedRedN = "e"
 const selectedWhiteN = "f"
+const whiteKing = "z"
+const selectedWKing = "x"
+const selectedWKingN = "c"
+const redKing = "v"
+const selectedRKing = "b"
+const selectedRKingN = "n"
 
 var turn = "w"
 
@@ -193,6 +199,108 @@ DCC2222222222CCD
 DCC2222222222CCD
 DCCCC222222CCCCD
 DCCCCCCCCCCCCCCD
+DDDDDDDDDDDDDDDD`],
+  [whiteKing, bitmap`
+CCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCC
+CCCCC222222CCCCC
+CCC2222222222CCC
+CCC2222222222CCC
+CC222222222222CC
+CC222121121222CC
+CC222111111222CC
+CC222111111222CC
+CC222111111222CC
+CC222222222222CC
+CCC2222222222CCC
+CCC2222222222CCC
+CCCCC222222CCCCC
+CCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCC`],
+  [selectedWKing, bitmap`
+4444444444444444
+4CCCCCCCCCCCCCC4
+4CCCC222222CCCC4
+4CC2222222222CC4
+4CC2222222222CC4
+4C222222222222C4
+4C222121121222C4
+4C222111111222C4
+4C222111111222C4
+4C222111111222C4
+4C222222222222C4
+4CC2222222222CC4
+4CC2222222222CC4
+4CCCC222222CCCC4
+4CCCCCCCCCCCCCC4
+4444444444444444`],
+  [selectedWKingN, bitmap`
+DDDDDDDDDDDDDDDD
+DCCCCCCCCCCCCCCD
+DCCCC222222CCCCD
+DCC2222222222CCD
+DCC2222222222CCD
+DC222222222222CD
+DC222121121222CD
+DC222111111222CD
+DC222111111222CD
+DC222111111222CD
+DC222222222222CD
+DCC2222222222CCD
+DCC2222222222CCD
+DCCCC222222CCCCD
+DCCCCCCCCCCCCCCD
+DDDDDDDDDDDDDDDD`],
+  [redKing, bitmap`
+CCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCC
+CCCCC333333CCCCC
+CCC3333333333CCC
+CCC3333333333CCC
+CC333333333333CC
+CC333232232333CC
+CC333222222333CC
+CC333222222333CC
+CC333222222333CC
+CC333333333333CC
+CCC3333333333CCC
+CCC3333333333CCC
+CCCCC333333CCCCC
+CCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCC`],
+  [selectedRKing, bitmap`
+4444444444444444
+4CCCCCCCCCCCCCC4
+4CCCC333333CCCC4
+4CC3333333333CC4
+4CC3333333333CC4
+4C333333333333C4
+4C333232232333C4
+4C333222222333C4
+4C333222222333C4
+4C333222222333C4
+4C333333333333C4
+4CC3333333333CC4
+4CC3333333333CC4
+4CCCC333333CCCC4
+4CCCCCCCCCCCCCC4
+4444444444444444`],
+  [selectedRKingN, bitmap`
+DDDDDDDDDDDDDDDD
+DCCCCCCCCCCCCCCD
+DCCCC333333CCCCD
+DCC3333333333CCD
+DCC3333333333CCD
+DC333333333333CD
+DC333232232333CD
+DC333222222333CD
+DC333222222333CD
+DC333222222333CD
+DC333333333333CD
+DCC3333333333CCD
+DCC3333333333CCD
+DCCCC333333CCCCD
+DCCCCCCCCCCCCCCD
 DDDDDDDDDDDDDDDD`]
 )
 
@@ -205,7 +313,7 @@ rlrlrlrl
 lrlrlrlr
 rlrlrlrl
 ldldldld
-dldldldl
+rlrldldl
 lwlwlwlw
 wlwlwlwl
 lolwlwlw`
@@ -218,21 +326,33 @@ setMap(levels[level])
 //   [ emptyField2 ]: []
 // })
 
+function getSelected() {
+    if(getFirst(selectedWhite)) {
+    return selectedWhite;
+  } else if(getFirst(selectedWhiteN)) {
+    return selectedWhiteN;
+  } else if(getFirst(selectedRed)) {
+    return selectedRed;
+  } else if(getFirst(selectedRedN)) {
+    return selectedRedN;
+  } else if(getFirst(selectedE1N)) {
+    return selectedE1N;
+  } else if(getFirst(selectedE2N)) {
+    return selectedE2N;
+  } else if(getFirst(selectedRKing)) {
+    return selectedRKing;
+  } else if(getFirst(selectedRKingN)) {
+    return selectedRKingN;
+  } else if(getFirst(selectedWKing)) {
+    return selectedWKing;
+  } else if(getFirst(selectedWKingN)) {
+    return selectedWKingN;
+  }
+}
+
 onInput("w", () => {
 
-  if(getFirst(selectedWhite)) {
-    currentSprite = selectedWhite
-  } else if(getFirst(selectedWhiteN)) {
-    currentSprite = selectedWhiteN
-  } else if(getFirst(selectedRed)) {
-    currentSprite = selectedRed
-  } else if(getFirst(selectedRedN)) {
-    currentSprite = selectedRedN
-  } else if(getFirst(selectedE1N)) {
-    currentSprite = selectedE1N
-  } else if(getFirst(selectedE2N)) {
-    currentSprite = selectedE2N
-  }
+  const currentSprite = getSelected()
   
   const currentX = getFirst(currentSprite).x
   const currentY = getFirst(currentSprite).y
@@ -244,19 +364,7 @@ onInput("w", () => {
 
 onInput("s", () => {
 
-  if(getFirst(selectedWhite)) {
-    currentSprite = selectedWhite
-  } else if(getFirst(selectedWhiteN)) {
-    currentSprite = selectedWhiteN
-  } else if(getFirst(selectedRed)) {
-    currentSprite = selectedRed
-  } else if(getFirst(selectedRedN)) {
-    currentSprite = selectedRedN
-  } else if(getFirst(selectedE1N)) {
-    currentSprite = selectedE1N
-  } else if(getFirst(selectedE2N)) {
-    currentSprite = selectedE2N
-  }
+  const currentSprite = getSelected()
   
   const currentX = getFirst(currentSprite).x
   const currentY = getFirst(currentSprite).y
@@ -268,19 +376,7 @@ onInput("s", () => {
 
 onInput("a", () => {
 
-  if(getFirst(selectedWhite)) {
-    currentSprite = selectedWhite
-  } else if(getFirst(selectedWhiteN)) {
-    currentSprite = selectedWhiteN
-  } else if(getFirst(selectedRed)) {
-    currentSprite = selectedRed
-  } else if(getFirst(selectedRedN)) {
-    currentSprite = selectedRedN
-  } else if(getFirst(selectedE1N)) {
-    currentSprite = selectedE1N
-  } else if(getFirst(selectedE2N)) {
-    currentSprite = selectedE2N
-  }
+  const currentSprite = getSelected()
   
   const currentX = getFirst(currentSprite).x
   const currentY = getFirst(currentSprite).y
@@ -292,19 +388,7 @@ onInput("a", () => {
 
 onInput("d", () => {
 
-  if(getFirst(selectedWhite)) {
-    currentSprite = selectedWhite
-  } else if(getFirst(selectedWhiteN)) {
-    currentSprite = selectedWhiteN
-  } else if(getFirst(selectedRed)) {
-    currentSprite = selectedRed
-  } else if(getFirst(selectedRedN)) {
-    currentSprite = selectedRedN
-  } else if(getFirst(selectedE1N)) {
-    currentSprite = selectedE1N
-  } else if(getFirst(selectedE2N)) {
-    currentSprite = selectedE2N
-  }
+  const currentSprite = getSelected()
   
   const currentX = getFirst(currentSprite).x
   const currentY = getFirst(currentSprite).y
@@ -315,8 +399,68 @@ onInput("d", () => {
 })
 
 onInput("j", () => {
+  // If selected piece is not a king, `j` button means left top move if white and bottom left if red
 
-  // Here add a script to make a move
+  const selected = getSelected()
+
+  if(selected && selected === selectedWhite) {
+    const xBefore = getFirst(selected).x
+    const yBefore = getFirst(selected).y
+    var xAfter = 0;
+    var yAfter = 0;
+
+
+    const leftTop = getTile(xBefore-1, yBefore-1)[0]
+
+    // ---
+    // This section has to be adapted for red
+    var move = 0;
+    if(leftTop && leftTop.type === emptyField2) {
+       move = 1;
+    
+    } else if(turn === "w" && leftTop && leftTop.type === redChecker || leftTop.type === redKing) {
+      const leftTop1 = getTile(xBefore-2, yBefore-2)[0]
+    
+      // Check if an opponent's piece can be captured
+      if(leftTop1 && leftTop1.type === emptyField2) {
+        move = 2;
+      }
+    
+    } else {
+      move = 0;
+    }
+    // ---
+    
+    if(move === 1) {
+      xAfter = xBefore - 1
+      yAfter = yBefore - 1
+
+      clearTile(xBefore, yBefore)
+      addSprite(xBefore, yBefore, emptyField2)
+      
+      clearTile(xAfter, yAfter)
+      addSprite(xAfter, yAfter, whiteChecker)
+      
+    } else if(move === 2) {
+      xAfter = xBefore - 2
+      yAfter = yBefore - 2
+      
+      capturedPawnX = xBefore - 1
+      capturedPawnY = yBefore - 1
+
+      clearTile(xBefore, yBefore)
+      addSprite(xBefore, yBefore, emptyField2)
+
+      clearTile(capturedPawnX, capturedPawnY)
+      addSprite(capturedPawnX, capturedPawnY, emptyField2)
+      
+      clearTile(xAfter, yAfter)
+      addSprite(xAfter, yAfter, whiteChecker)
+
+      // Here add a check if player can capture one more piece after this move
+    }
+    
+  }
   
 })
 
@@ -341,13 +485,23 @@ function spriteSelector(xBefore, yBefore, direction) {
 
   const currentSprite = getTile(xBefore, yBefore)[0]
   const nextSprite = getTile(xAfter, yAfter)[0]
+
+  if(!nextSprite) {
+    return;
+  }
   
   if(currentSprite.type === selectedWhite || currentSprite.type === selectedWhiteN) {
     clearTile(xBefore, yBefore)
     addSprite(xBefore, yBefore, whiteChecker)
+  } else if(currentSprite.type === selectedWKing || currentSprite.type === selectedWKingN) {
+    clearTile(xBefore, yBefore)
+    addSprite(xBefore, yBefore, whiteKing)
   } else if(currentSprite.type === selectedRed || currentSprite.type === selectedRedN) {
     clearTile(xBefore, yBefore)
     addSprite(xBefore, yBefore, redChecker)
+  } else if(currentSprite.type === selectedRKing || currentSprite.type === selectedRKingN) {
+    clearTile(xBefore, yBefore)
+    addSprite(xBefore, yBefore, redKing)
   } else if(currentSprite.type === selectedE1N) {
     clearTile(xBefore, yBefore)
     addSprite(xBefore, yBefore, emptyField1)
@@ -361,7 +515,12 @@ function spriteSelector(xBefore, yBefore, direction) {
     if(turn === "w") {
 
       // Here add a check to see if the player can move selected pawn
-      addSprite(xAfter, yAfter, selectedWhite)
+      const moveAllowed = canMove(xAfter, yAfter)
+      if(moveAllowed === 1 || moveAllowed === 2) {
+        addSprite(xAfter, yAfter, selectedWhite)
+      } else {
+        addSprite(xAfter, yAfter, selectedWhiteN)
+      }
       
     } else {
       addSprite(xAfter, yAfter, selectedWhiteN)
@@ -376,23 +535,30 @@ function spriteSelector(xBefore, yBefore, direction) {
     clearTile(xAfter, yAfter)
     addSprite(xAfter, yAfter, selectedE2N)
   }
+}
+
+function canMove(currentX, currentY) {
+
+  // Currently doing checks only for white
+
+  const leftTop = getTile(currentX-1, currentY-1)[0]
+  const rightTop = getTile(currentX+1, currentY-1)[0]
   
-  // } else if(getTile(currentX, currentY-1).some(sprite => sprite.type === emptyField2)) {
-  //   clearTile(currentX, currentY-1)
-  //   clearTile(currentX, currentY)
-  //   addSprite(currentX, currentY-1, selectedE2N)
-  //   addSprite(currentX, currentY, selectedRedN)
-  // } else if(getTile(currentX, currentY-1).some(sprite => sprite.type === redChecker)) {
-  //   clearTile(currentX, currentY-1)
-  //   clearTile(currentX, currentY)
-  //   addSprite(currentX, currentY-1, selectedRedN)
-  //   addSprite(currentX, currentY, selectedRedN)
-  // } else if(getTile(currentX, currentY-1).some(sprite => sprite.type === whiteChecker)) {
-  //   clearTile(currentX, currentY-1)
-  //   clearTile(currentX, currentY)
-  //   addSprite(currentX, currentY-1, selectedWhite)
-  //   addSprite(currentX, currentY, selectedRedN)
-  // }
+  if(leftTop && leftTop.type === emptyField2 || rightTop && rightTop.type === emptyField2) {
+    return 1;
+    
+  } else if(turn === "w" && leftTop && leftTop.type === redChecker || leftTop.type === redKing) {
+    const leftTop1 = getTile(currentX-2, currentY-2)[0]
+    const rightTop1 = getTile(currentX+2, currentY-2)[0]
+
+    // Check if an opponent's piece can be captured
+    if(leftTop1 && leftTop1.type === emptyField2 || rightTop1 && rightTop1.type === emptyField2) {
+      return 2;
+    }
+
+  } else {
+    return 0;
+  }
 }
 
 afterInput(() => {
