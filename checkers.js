@@ -309,14 +309,14 @@ DDDDDDDDDDDDDDDD`]
 let level = 0
 const levels = [
   map`
-rlrlrlrl
 lrlrlrlr
 rlrlrlrl
-ldldldld
-rlrldldl
-lwlwlwlw
-wlwlwlwl
-lolwlwlw`
+lrlrlrlr
+dldldldl
+lrldldld
+dldldlwl
+lrldlwlw
+oldlwlwl`
 ]
 
 setMap(levels[level])
@@ -398,169 +398,6 @@ onInput("d", () => {
   
 })
 
-function move(xBefore, yBefore, checkerToMove, direction) {
-
-  var xAfter = 0;
-  var yAfter = 0;
-
-  var nextTile = 0;
-  if(direction === "tl") {
-    nextTile = getTile(xBefore-1, yBefore-1)[0]
-  } else if(direction === "tr") {
-    nextTile = getTile(xBefore+1, yBefore-1)[0]
-  } else if(direction === "bl") {
-    nextTile = getTile(xBefore+1, yBefore+1)[0]
-  } else if(direction === "br") {
-    nextTile = getTile(xBefore+1, yBefore+1)[0]
-  }
-
-  // ---
-  // This section has to be adapted for red
-  var move = 0;
-  if(nextTile && nextTile.type === emptyField2) {
-     move = 1;
-  
-  } else if(turn === "w" && nextTile && nextTile.type === redChecker) {
-    if(direction === "tl") {
-      nextTile = getTile(xBefore-2, yBefore-2)[0]
-    } else if(direction === "tr") {
-      nextTile = getTile(xBefore+2, yBefore-2)[0]
-    } else if(direction === "bl") {
-      nextTile = getTile(xBefore-2, yBefore+2)[0]
-    } else if(direction === "br") {
-      nextTile = getTile(xBefore+2, yBefore+2)[0]
-    }
-  
-    // Check if an opponent's piece can be captured
-    if(nextTile && nextTile.type === emptyField2) {
-      move = 2;
-    }
-  
-  } else if(turn === "r" && nextTile && nextTile.type === whiteChecker || turn === "r" && nextTile && nextTile.type === whiteKing) {
-    if(direction === "tl") {
-      nextTile = getTile(xBefore-2, yBefore-2)[0]
-    } else if(direction === "tr") {
-      nextTile = getTile(xBefore+2, yBefore-2)[0]
-    } else if(direction === "bl") {
-      nextTile = getTile(xBefore-2, yBefore+2)[0]
-    } else if(direction === "br") {
-      nextTile = getTile(xBefore+2, yBefore+2)[0]
-    }
-  
-    // Check if an opponent's piece can be captured
-    if(nextTile && nextTile.type === emptyField2) {
-      move = 2;
-    }
-  
-  } else {
-    move = 0;
-  }
-  
-  // ---
-  
-  if(move === 1) {
-    if(direction === "tl") {
-      xAfter = xBefore - 1
-      yAfter = yBefore - 1
-    } else if(direction === "tr") {
-      xAfter = xBefore + 1
-      yAfter = yBefore - 1
-    } else if(direction === "bl") {
-      xAfter = xBefore - 1
-      yAfter = yBefore + 1
-    } else if(direction === "br") {
-      xAfter = xBefore + 1
-      yAfter = yBefore + 1
-    }
-
-    clearTile(xBefore, yBefore)
-    addSprite(xBefore, yBefore, emptyField2)
-    
-    clearTile(xAfter, yAfter)
-    addSprite(xAfter, yAfter, whiteChecker)
-
-    var moved = true;
-    
-  } else if(move === 2) {
-      var capturedPawnX = 0;
-      var capturedPawnY = 0;
-    
-    if(direction === "tl") {
-      xAfter = xBefore - 2
-      yAfter = yBefore - 2
-      
-      capturedPawnX = xBefore - 1
-      capturedPawnY = yBefore - 1
-    } else if(direction === "tr") {
-      xAfter = xBefore + 2
-      yAfter = yBefore - 2
-      
-      capturedPawnX = xBefore + 1
-      capturedPawnY = yBefore - 1
-    } else if(direction === "bl") {
-      xAfter = xBefore - 2
-      yAfter = yBefore + 2
-      
-      capturedPawnX = xBefore - 1
-      capturedPawnY = yBefore + 1
-    } else if(direction === "br") {
-      xAfter = xBefore + 2
-      yAfter = yBefore + 2
-      
-      capturedPawnX = xBefore + 1
-      capturedPawnY = yBefore + 1
-    }
-    
-    clearTile(xBefore, yBefore)
-    addSprite(xBefore, yBefore, emptyField2)
-
-    clearTile(capturedPawnX, capturedPawnY)
-    addSprite(capturedPawnX, capturedPawnY, emptyField2)
-    
-    clearTile(xAfter, yAfter)
-    addSprite(xAfter, yAfter, whiteChecker)
-
-    // Here add a check if player can capture one move piece
-
-    var moved = true;
-  }
-
-  if(moved === true && turn === "w") {
-    
-    const checker = getFirst(redKing)
-  
-    if(checker) {
-      
-      const checkerX = checker.x
-      const checkerY = checker.y
-  
-    } else {
-
-      const checker = getFirst(redChecker)
-      
-      const checkerX = checker.x
-      const checkerY = checker.y
-  
-      if(checkerX && checkerY) {
-  
-        const canMove = canMove(findX, findY)
-        clearTile(findX, findY)
-        
-        if(canMove === 1 || canMove === 2) {
-          addSprite(findX, findY, selectedRed)
-        } else {
-          addSprite(findX, findY, selectedRedN)
-        }
-        
-      } else {
-        //
-      }
-      
-    }
-  }
-  
-}
-
 onInput("j", () => {
   // If selected piece is not a king, `j` button means left top move if white and bottom left if red
 
@@ -578,7 +415,7 @@ onInput("j", () => {
     const xBefore = getFirst(selected).x
     const yBefore = getFirst(selected).y
   
-    move(xBefore, yBefore, selectedWhite, "bl")
+    move(xBefore, yBefore, selectedRed, "bl")
     // bl = bottom left
   } else if(selected && selected === selectedRKing) {
     //
@@ -602,7 +439,7 @@ onInput("l", () => {
     const xBefore = getFirst(selected).x
     const yBefore = getFirst(selected).y
   
-    move(xBefore, yBefore, selectedWhite, "br")
+    move(xBefore, yBefore, selectedRed, "br")
     // bl = bottom left
   } else if(selected && selected === selectedRKing) {
     //
@@ -634,6 +471,7 @@ function spriteSelector(xBefore, yBefore, direction) {
   if(!nextSprite) {
     return;
   }
+
   
   if(currentSprite.type === selectedWhite || currentSprite.type === selectedWhiteN) {
     clearTile(xBefore, yBefore)
@@ -667,13 +505,28 @@ function spriteSelector(xBefore, yBefore, direction) {
       } else {
         addSprite(xAfter, yAfter, selectedWhiteN)
       }
-      
-    } else {
+
+    } else if(turn === "r") {
+      clearTile(xAfter, yAfter)
       addSprite(xAfter, yAfter, selectedWhiteN)
     }
   } else if(nextSprite.type === redChecker) {
-    clearTile(xAfter, yAfter)
-    addSprite(xAfter, yAfter, selectedRedN)
+    if(turn === "r") {
+      
+      // Here add a check to see if the player can move selected pawn
+      const moveAllowed = canMove(xAfter, yAfter)
+      clearTile(xAfter, yAfter)
+      
+      if(moveAllowed === 1 || moveAllowed === 2) {
+        addSprite(xAfter, yAfter, selectedRed)
+      } else {
+        addSprite(xAfter, yAfter, selectedRedN)
+      }
+
+    } else if(turn === "w") {
+      clearTile(xAfter, yAfter)
+      addSprite(xAfter, yAfter, selectedRedN)
+    }
   } else if(nextSprite.type === emptyField1) {
     clearTile(xAfter, yAfter)
     addSprite(xAfter, yAfter, selectedE1N)
@@ -751,6 +604,195 @@ function canMove(currentX, currentY) {
     }
   }
 
+}
+
+function move(xBefore, yBefore, checkerToMove, direction) {
+
+  var xAfter = 0;
+  var yAfter = 0;
+
+  var nextTile = 0;
+  if(direction === "tl") {
+    nextTile = getTile(xBefore-1, yBefore-1)[0]
+  } else if(direction === "tr") {
+    nextTile = getTile(xBefore+1, yBefore-1)[0]
+  } else if(direction === "bl") {
+    nextTile = getTile(xBefore-1, yBefore+1)[0]
+  } else if(direction === "br") {
+    nextTile = getTile(xBefore+1, yBefore+1)[0]
+  }
+
+  if(!nextTile) {
+    return;
+  }
+
+  var move = 0;
+  if(nextTile && nextTile.type === emptyField2) {
+     move = 1;
+  
+  } else if(turn === "w" && nextTile && nextTile.type === redChecker || turn === "w" && nextTile && nextTile.type === redKing) {
+    if(direction === "tl") {
+      nextTile = getTile(xBefore-2, yBefore-2)[0]
+    } else if(direction === "tr") {
+      nextTile = getTile(xBefore+2, yBefore-2)[0]
+    } else if(direction === "bl") {
+      nextTile = getTile(xBefore-2, yBefore+2)[0]
+    } else if(direction === "br") {
+      nextTile = getTile(xBefore+2, yBefore+2)[0]
+    }
+  
+    // Check if an opponent's piece can be captured
+    if(nextTile && nextTile.type === emptyField2) {
+      move = 2;
+    }
+  
+  } else if(turn === "r" && nextTile && nextTile.type === whiteChecker || turn === "r" && nextTile && nextTile.type === whiteKing) {
+    if(direction === "tl") {
+      nextTile = getTile(xBefore-2, yBefore-2)[0]
+    } else if(direction === "tr") {
+      nextTile = getTile(xBefore+2, yBefore-2)[0]
+    } else if(direction === "bl") {
+      nextTile = getTile(xBefore-2, yBefore+2)[0]
+    } else if(direction === "br") {
+      nextTile = getTile(xBefore+2, yBefore+2)[0]
+    }
+  
+    // Check if an opponent's piece can be captured
+    if(nextTile && nextTile.type === emptyField2) {
+      move = 2;
+    }
+  
+  } else {
+    move = 0;
+  }
+  
+  if(move === 1) {
+    if(direction === "tl") {
+      xAfter = xBefore - 1
+      yAfter = yBefore - 1
+    } else if(direction === "tr") {
+      xAfter = xBefore + 1
+      yAfter = yBefore - 1
+    } else if(direction === "bl") {
+      xAfter = xBefore - 1
+      yAfter = yBefore + 1
+    } else if(direction === "br") {
+      xAfter = xBefore + 1
+      yAfter = yBefore + 1
+    }
+
+    clearTile(xBefore, yBefore)
+    addSprite(xBefore, yBefore, emptyField2)
+    
+    clearTile(xAfter, yAfter)
+
+    if(checkerToMove === selectedWhite) {
+      addSprite(xAfter, yAfter, whiteChecker)
+    } else if(checkerToMove === selectedRed) {
+      addSprite(xAfter, yAfter, redChecker)
+    }
+    
+  } else if(move === 2) {
+    
+      var capturedPawnX = 0;
+      var capturedPawnY = 0;
+    
+    if(direction === "tl") {
+      xAfter = xBefore - 2
+      yAfter = yBefore - 2
+      
+      capturedPawnX = xBefore - 1
+      capturedPawnY = yBefore - 1
+    } else if(direction === "tr") {
+      xAfter = xBefore + 2
+      yAfter = yBefore - 2
+      
+      capturedPawnX = xBefore + 1
+      capturedPawnY = yBefore - 1
+    } else if(direction === "bl") {
+      xAfter = xBefore - 2
+      yAfter = yBefore + 2
+      
+      capturedPawnX = xBefore - 1
+      capturedPawnY = yBefore + 1
+    } else if(direction === "br") {
+      xAfter = xBefore + 2
+      yAfter = yBefore + 2
+      
+      capturedPawnX = xBefore + 1
+      capturedPawnY = yBefore + 1
+    }
+    
+    clearTile(xBefore, yBefore)
+    addSprite(xBefore, yBefore, emptyField2)
+
+    clearTile(capturedPawnX, capturedPawnY)
+    addSprite(capturedPawnX, capturedPawnY, emptyField2)
+    
+    clearTile(xAfter, yAfter)
+    if(checkerToMove === selectedWhite) {
+      addSprite(xAfter, yAfter, whiteChecker)
+    } else if(checkerToMove === selectedRed) {
+      addSprite(xAfter, yAfter, redChecker)
+    }
+  }
+
+  if(move !== 0) {
+    var oneMoreMove = 0;
+    oneMoreMove = canMove(xAfter, yAfter)
+  
+    if(turn === "w" && oneMoreMove === 2) {
+      clearTile(xAfter, yAfter)
+      addSprite(xAfter, yAfter, selectedWhite)
+    } else if(turn === "r" && oneMoreMove === 2) {
+      clearTile(xAfter, yAfter)
+      addSprite(xAfter, yAfter, selectedRed)
+    } else if(turn === "w") {
+      
+      var nextChecker = getAll(redKing)[0]
+      if(nextChecker) {
+        // redKing
+      } else {
+        nextChecker = getAll(redChecker)[0]
+  
+        var moveAllowed = 0;
+        moveAllowed = canMove(nextChecker.x, nextChecker.y)
+        clearTile(nextChecker.x, nextChecker.y)
+        
+        if(moveAllowed === 0) {
+          addSprite(nextChecker.x, nextChecker.y, selectedRedN)
+          turn = "r"
+        } else {
+          // !!!!!
+          addSprite(nextChecker.x, nextChecker.y, selectedRed)
+          turn = "r"
+        }        
+      }
+    } else if(turn === "r") {
+      
+      var nextChecker = getAll(whiteKing)[0]
+      if(nextChecker) {
+        // whiteKing
+      } else {
+        nextChecker = getAll(whiteChecker)[0]
+  
+        var moveAllowed = 0;
+        moveAllowed = canMove(nextChecker.x, nextChecker.y)
+        clearTile(nextChecker.x, nextChecker.y)
+        
+        if(moveAllowed === 0) {
+          addSprite(nextChecker.x, nextChecker.y, selectedWhiteN)
+          turn = "w"
+        } else {
+          // !!!!!
+          addSprite(nextChecker.x, nextChecker.y, selectedWhite)
+          turn = "w"
+        }        
+      }
+    }
+  }
+  
+  
 }
 
 afterInput(() => {
