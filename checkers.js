@@ -309,8 +309,8 @@ DDDDDDDDDDDDDDDD`]
 let level = 0
 const levels = [
   map`
-lrlrlrlr
-rlrlrlrl
+ldlrlrlr
+wlrlrlrl
 lrlrlrlr
 dldldldl
 lrldldld
@@ -686,8 +686,12 @@ function move(xBefore, yBefore, checkerToMove, direction) {
     
     clearTile(xAfter, yAfter)
 
-    if(checkerToMove === selectedWhite) {
+    if(checkerToMove === selectedWhite && yAfter === 0) {
+      addSprite(xAfter, yAfter, whiteKing)
+    } else if(checkerToMove === selectedWhite) {
       addSprite(xAfter, yAfter, whiteChecker)
+    } else if(checkerToMove === selectedRed && yAfter === 7) {
+      addSprite(xAfter, yAfter, redKing)
     } else if(checkerToMove === selectedRed) {
       addSprite(xAfter, yAfter, redChecker)
     }
@@ -730,14 +734,19 @@ function move(xBefore, yBefore, checkerToMove, direction) {
     addSprite(capturedPawnX, capturedPawnY, emptyField2)
     
     clearTile(xAfter, yAfter)
-    if(checkerToMove === selectedWhite) {
+    
+    if(checkerToMove === selectedWhite && yAfter === 0) {
+      addSprite(xAfter, yAfter, whiteKing)
+    } else if(checkerToMove === selectedWhite) {
       addSprite(xAfter, yAfter, whiteChecker)
+    } else if(checkerToMove === selectedRed && yAfter === 7) {
+      addSprite(xAfter, yAfter, redKing)
     } else if(checkerToMove === selectedRed) {
       addSprite(xAfter, yAfter, redChecker)
     }
   }
 
-  if(move !== 0) {
+  if(move === 2) {
     var oneMoreMove = 0;
     oneMoreMove = canMove(xAfter, yAfter)
   
@@ -759,12 +768,11 @@ function move(xBefore, yBefore, checkerToMove, direction) {
         moveAllowed = canMove(nextChecker.x, nextChecker.y)
         clearTile(nextChecker.x, nextChecker.y)
         
-        if(moveAllowed === 0) {
-          addSprite(nextChecker.x, nextChecker.y, selectedRedN)
+        if(moveAllowed !== 0) {
+          addSprite(nextChecker.x, nextChecker.y, selectedRed)
           turn = "r"
         } else {
-          // !!!!!
-          addSprite(nextChecker.x, nextChecker.y, selectedRed)
+          addSprite(nextChecker.x, nextChecker.y, selectedRedN)
           turn = "r"
         }        
       }
@@ -780,19 +788,66 @@ function move(xBefore, yBefore, checkerToMove, direction) {
         moveAllowed = canMove(nextChecker.x, nextChecker.y)
         clearTile(nextChecker.x, nextChecker.y)
         
-        if(moveAllowed === 0) {
-          addSprite(nextChecker.x, nextChecker.y, selectedWhiteN)
+        if(moveAllowed !== 0) {
+          addSprite(nextChecker.x, nextChecker.y, selectedWhite)
           turn = "w"
         } else {
-          // !!!!!
-          addSprite(nextChecker.x, nextChecker.y, selectedWhite)
+          addSprite(nextChecker.x, nextChecker.y, selectedWhiteN)
           turn = "w"
         }        
       }
     }
+  } else if(turn === "w") {
+      
+    var nextChecker = getAll(redKing)[0]
+    if(nextChecker) {
+      // redKing
+    } else {
+      nextChecker = getAll(redChecker)[0]
+  
+      var moveAllowed = 0;
+      moveAllowed = canMove(nextChecker.x, nextChecker.y)
+      clearTile(nextChecker.x, nextChecker.y)
+        
+      if(moveAllowed !== 0) {
+        addSprite(nextChecker.x, nextChecker.y, selectedRed)
+        turn = "r"
+      } else {
+        addSprite(nextChecker.x, nextChecker.y, selectedRedN)
+        turn = "r"
+      }        
+    }
+  } else if(turn ==="r") {
+      
+    var nextChecker = getAll(whiteKing)[0]
+    if(nextChecker) {
+      var moveAllowed = 0;
+      moveAllowed = canMove(nextChecker.x, nextChecker.y)
+      clearTile(nextChecker.x, nextChecker.y)
+      
+      if(moveAllowed !== 0) {
+        addSprite(nextChecker.x, nextChecker.y, selectedWKing)
+        turn = "w"
+      } else {
+        addSprite(nextChecker.x, nextChecker.y, selectedWKingN)
+        turn = "w"
+      }  
+    } else {
+      nextChecker = getAll(whiteChecker)[0]
+
+      var moveAllowed = 0;
+      moveAllowed = canMove(nextChecker.x, nextChecker.y)
+      clearTile(nextChecker.x, nextChecker.y)
+      
+      if(moveAllowed !== 0) {
+        addSprite(nextChecker.x, nextChecker.y, selectedWhite)
+        turn = "w"
+      } else {
+        addSprite(nextChecker.x, nextChecker.y, selectedWhiteN)
+        turn = "w"
+      }        
+    }    
   }
-  
-  
 }
 
 afterInput(() => {
