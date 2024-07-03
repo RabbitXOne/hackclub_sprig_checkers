@@ -632,7 +632,14 @@ function canMove(currentX, currentY) {
       if(topLeft && topLeft.type === emptyField2 || topRight && topRight.type === emptyField2) {
         return 2;
       } else {
-        return 0;
+        topLeft = getTile(currentX-1, currentY-1)[0]
+        topRight = getTile(currentX+1, currentY-1)[0]
+
+        if(topLeft && topLeft.type === emptyField2 || topRight && topRight.type === emptyField2) {
+          return 1;
+        } else {
+          return 0;
+        }
       }
     } else if(topLeft && topLeft.type === emptyField2 || topRight && topRight.type === emptyField2) {
       return 1;
@@ -651,7 +658,14 @@ function canMove(currentX, currentY) {
       if(bottomLeft && bottomLeft.type === emptyField2 || bottomRight && bottomRight.type === emptyField2) {
         return 2;
       } else {
-        return 0;
+        bottomLeft = getTile(currentX-1, currentY+1)[0]
+        bottomRight = getTile(currentX+1, currentY+1)[0]
+
+        if(bottomLeft && bottomLeft.type === emptyField2 || bottomRight && bottomRight.type === emptyField2) {
+          return 1;
+        } else {
+          return 0;
+        }
       }
     } else if(bottomLeft && bottomLeft.type === emptyField2 || bottomRight && bottomRight.type === emptyField2) {
       return 1;
@@ -674,7 +688,16 @@ function canMove(currentX, currentY) {
       if(topLeft && topLeft.type === emptyField2 || topRight && topRight.type === emptyField2 || bottomLeft && bottomLeft.type === emptyField2 || bottomRight && bottomRight.type === emptyField2) {
         return 2;
       } else {
-        return 0;
+        topLeft = getTile(currentX-1, currentY-1)[0]
+        topRight = getTile(currentX+1, currentY-1)[0]
+        bottomLeft = getTile(currentX-1, currentY+1)[0]
+        bottomRight = getTile(currentX+1, currentY+1)[0]
+
+        if(topLeft && topLeft.type === emptyField2 || topRight && topRight.type === emptyField2 || bottomRight && bottomRight.type === emptyField2 || bottomLeft && bottomLeft.type === emptyField2) {
+          return 1;
+        } else {
+          return 0;
+        }
       }
     } else if(topLeft && topLeft.type === emptyField2 || topRight && topRight.type === emptyField2 || bottomRight && bottomRight.type === emptyField2 || bottomLeft && bottomLeft.type === emptyField2) {
       return 1;
