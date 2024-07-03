@@ -26,6 +26,8 @@ const selectedRKing = "b"
 const selectedRKingN = "n"
 
 var turn = "w"
+var winner = 0;
+var captureOneMorePiece = 0;
 
 // Add an option to play with friend or vs computer?
 
@@ -343,15 +345,11 @@ function getSelected() {
   }
 }
 
-// CONTROLS:
-// SELECTOR: W - UP, A - LEFT, S - DOWN, D - RIGHT
-
-// WHITE PIECE: J - UP AND LEFT, L - UP AND RIGHT
-// RED PIECE: J - DOWN AND LEFT, L - DOWN AND RIGHT
-
-// RED/WHITE KING: J - DOWN AND LEFT, L - DOWN AND RIGHT, I - UP AND LEFT, K - UP AND RIGHT
-
 onInput("w", () => {
+
+  if(winner && winner === "white" || winner && winner === "red" || captureOneMorePiece === 1) {
+    return;
+  }
 
   const currentSprite = getSelected()
   
@@ -365,6 +363,10 @@ onInput("w", () => {
 
 onInput("s", () => {
 
+  if(winner && winner === "white" || winner && winner === "red" || captureOneMorePiece === 1) {
+    return;
+  }
+
   const currentSprite = getSelected()
   
   const currentX = getFirst(currentSprite).x
@@ -376,6 +378,10 @@ onInput("s", () => {
 })
 
 onInput("a", () => {
+
+  if(winner && winner === "white" || winner && winner === "red" || captureOneMorePiece === 1) {
+    return;
+  }
 
   const currentSprite = getSelected()
   
@@ -389,6 +395,10 @@ onInput("a", () => {
 
 onInput("d", () => {
 
+  if(winner && winner === "white" || winner && winner === "red" || captureOneMorePiece === 1) {
+    return;
+  }
+
   const currentSprite = getSelected()
   
   const currentX = getFirst(currentSprite).x
@@ -400,6 +410,11 @@ onInput("d", () => {
 })
 
 onInput("j", () => {
+
+  if(winner && winner === "white" || winner && winner === "red") {
+    return;
+  }
+  
   const selected = getSelected()
   const xBefore = getFirst(selected).x
   const yBefore = getFirst(selected).y
@@ -416,6 +431,11 @@ onInput("j", () => {
 })
 
 onInput("l", () => {
+
+  if(winner && winner === "white" || winner && winner === "red") {
+    return;
+  }
+  
   const selected = getSelected()
   const xBefore = getFirst(selected).x
   const yBefore = getFirst(selected).y
@@ -432,6 +452,10 @@ onInput("l", () => {
 })
 
 onInput("i", () => {
+
+  if(winner && winner === "white" || winner && winner === "red") {
+    return;
+  }
   
   const selected = getSelected()
   const xBefore = getFirst(selected).x
@@ -445,6 +469,10 @@ onInput("i", () => {
 })
 
 onInput("k", () => {
+
+  if(winner && winner === "white" || winner && winner === "red") {
+    return;
+  }
   
   const selected = getSelected()
   const xBefore = getFirst(selected).x
@@ -556,7 +584,6 @@ function spriteSelector(xBefore, yBefore, direction) {
   } else if(nextSprite.type === redKing) {
     if(turn === "r") {
       
-      // Here add a check to see if the player can move selected pawn
       const moveAllowed = canMove(xAfter, yAfter)
       clearTile(xAfter, yAfter)
       
@@ -581,11 +608,6 @@ function spriteSelector(xBefore, yBefore, direction) {
 
 function canMove(currentX, currentY) {
 
-  // const leftTop = getTile(currentX-1, currentY-1)[0]
-  // const rightTop = getTile(currentX+1, currentY-1)[0]
-  // const leftBottom = getTile(currentX-1, currentY+1)[0]
-  // const rightBottom = getTile(currentX+1, currentY+1)[0]
-
   const checkerToCheck = getTile(currentX, currentY)[0]
   var canMoveInDirections = 0;
   
@@ -603,15 +625,17 @@ function canMove(currentX, currentY) {
     var topLeft = getTile(currentX-1, currentY-1)[0]
     var topRight = getTile(currentX+1, currentY-1)[0]
 
-    if(topLeft && topLeft.type === emptyField2 || topRight && topRight.type === emptyField2) {
-      return 1;
-    } else if(turn === "w" && topLeft && topLeft.type === redChecker || turn === "w" && topLeft && topLeft.type === redKing || turn === "w" && topRight && topRight.type === redChecker || turn === "w" && topRight && topRight.type === redKing) {
+    if(turn === "w" && topLeft && topLeft.type === redChecker || turn === "w" && topLeft && topLeft.type === redKing || turn === "w" && topRight && topRight.type === redChecker || turn === "w" && topRight && topRight.type === redKing) {
       topLeft = getTile(currentX-2, currentY-2)[0]
       topRight = getTile(currentX+2, currentY-2)[0]
 
       if(topLeft && topLeft.type === emptyField2 || topRight && topRight.type === emptyField2) {
         return 2;
+      } else {
+        return 0;
       }
+    } else if(topLeft && topLeft.type === emptyField2 || topRight && topRight.type === emptyField2) {
+      return 1;
     } else {
       return 0;
     }
@@ -620,15 +644,17 @@ function canMove(currentX, currentY) {
     var bottomLeft = getTile(currentX-1, currentY+1)[0]
     var bottomRight = getTile(currentX+1, currentY+1)[0]
 
-    if(bottomLeft && bottomLeft.type === emptyField2 || bottomRight && bottomRight.type === emptyField2) {
-      return 1;
-    } else if(turn === "r" && bottomLeft && bottomLeft.type === whiteChecker || turn === "r" && bottomLeft && bottomLeft.type === whiteKing || turn === "r" && bottomRight && bottomRight.type === whiteChecker || turn === "r" && bottomRight && bottomRight.type === whiteKing) {
+    if(turn === "r" && bottomLeft && bottomLeft.type === whiteChecker || turn === "r" && bottomLeft && bottomLeft.type === whiteKing || turn === "r" && bottomRight && bottomRight.type === whiteChecker || turn === "r" && bottomRight && bottomRight.type === whiteKing) {
       bottomLeft = getTile(currentX-2, currentY+2)[0]
       bottomRight = getTile(currentX+2, currentY+2)[0]
 
       if(bottomLeft && bottomLeft.type === emptyField2 || bottomRight && bottomRight.type === emptyField2) {
         return 2;
+      } else {
+        return 0;
       }
+    } else if(bottomLeft && bottomLeft.type === emptyField2 || bottomRight && bottomRight.type === emptyField2) {
+      return 1;
     } else {
       return 0;
     }
@@ -639,9 +665,7 @@ function canMove(currentX, currentY) {
     var bottomLeft = getTile(currentX-1, currentY+1)[0]
     var bottomRight = getTile(currentX+1, currentY+1)[0]
 
-    if(topLeft && topLeft.type === emptyField2 || topRight && topRight.type === emptyField2 || bottomRight && bottomRight.type === emptyField2 || bottomLeft && bottomLeft.type === emptyField2) {
-      return 1;
-    } else if(turn === "w" && topLeft && topLeft.type === redChecker || turn === "w" && topLeft && topLeft.type === redKing || turn === "w" && topRight && topRight.type === redChecker || turn === "w" && topRight && topRight.type === redKing || turn === "w" && bottomLeft && bottomLeft.type === redChecker || turn === "w" && bottomLeft && bottomLeft.type === redKing || turn === "w" && bottomRight && bottomRight.type === redChecker || turn === "w" && bottomRight && bottomRight.type === redKing|| turn === "r" && topLeft && topLeft.type === whiteChecker || turn === "r" && topLeft && topLeft.type === whiteKing || turn === "r" && topRight && topRight.type === whiteChecker || turn === "r" && topRight && topRight.type === whiteKing || turn === "r" && bottomLeft && bottomLeft.type === whiteChecker || turn === "r" && bottomLeft && bottomLeft.type === whiteKing || turn === "r" && bottomRight && bottomRight.type === whiteChecker || turn === "r" && bottomRight && bottomRight.type === whiteKing) {
+    if(turn === "w" && topLeft && topLeft.type === redChecker || turn === "w" && topLeft && topLeft.type === redKing || turn === "w" && topRight && topRight.type === redChecker || turn === "w" && topRight && topRight.type === redKing || turn === "w" && bottomLeft && bottomLeft.type === redChecker || turn === "w" && bottomLeft && bottomLeft.type === redKing || turn === "w" && bottomRight && bottomRight.type === redChecker || turn === "w" && bottomRight && bottomRight.type === redKing|| turn === "r" && topLeft && topLeft.type === whiteChecker || turn === "r" && topLeft && topLeft.type === whiteKing || turn === "r" && topRight && topRight.type === whiteChecker || turn === "r" && topRight && topRight.type === whiteKing || turn === "r" && bottomLeft && bottomLeft.type === whiteChecker || turn === "r" && bottomLeft && bottomLeft.type === whiteKing || turn === "r" && bottomRight && bottomRight.type === whiteChecker || turn === "r" && bottomRight && bottomRight.type === whiteKing) {
       topLeft = getTile(currentX-2, currentY-2)[0]
       topRight = getTile(currentX+2, currentY-2)[0]
       bottomLeft = getTile(currentX-2, currentY+2)[0]
@@ -649,7 +673,11 @@ function canMove(currentX, currentY) {
 
       if(topLeft && topLeft.type === emptyField2 || topRight && topRight.type === emptyField2 || bottomLeft && bottomLeft.type === emptyField2 || bottomRight && bottomRight.type === emptyField2) {
         return 2;
+      } else {
+        return 0;
       }
+    } else if(topLeft && topLeft.type === emptyField2 || topRight && topRight.type === emptyField2 || bottomRight && bottomRight.type === emptyField2 || bottomLeft && bottomLeft.type === emptyField2) {
+      return 1;
     } else {
       return 0;
     }
@@ -692,8 +720,7 @@ function move(xBefore, yBefore, checkerToMove, direction) {
     } else if(direction === "br") {
       nextTile = getTile(xBefore+2, yBefore+2)[0]
     }
-  
-    // Check if an opponent's piece can be captured
+
     if(nextTile && nextTile.type === emptyField2) {
       move = 2;
       var capturedChecker = "r"
@@ -712,7 +739,6 @@ function move(xBefore, yBefore, checkerToMove, direction) {
       nextTile = getTile(xBefore+2, yBefore+2)[0]
     }
   
-    // Check if an opponent's piece can be captured
     if(nextTile && nextTile.type === emptyField2) {
       move = 2;
       var capturedChecker = "w"
@@ -725,6 +751,10 @@ function move(xBefore, yBefore, checkerToMove, direction) {
   }
   
   if(move === 1) {
+    if(captureOneMorePiece === 1) {
+      return;
+    }
+    
     if(direction === "tl") {
       xAfter = xBefore - 1
       yAfter = yBefore - 1
@@ -792,12 +822,6 @@ function move(xBefore, yBefore, checkerToMove, direction) {
     clearTile(xBefore, yBefore)
     addSprite(xBefore, yBefore, emptyField2)
 
-    if(capturedChecker && capturedChecker === "w") {
-      whiteCheckers - 1;
-    } else if(capturedChecker && capturedChecker === "r") {
-      redCheckers - 1;
-    }
-
     clearTile(capturedPawnX, capturedPawnY)
     addSprite(capturedPawnX, capturedPawnY, emptyField2)
     
@@ -824,7 +848,7 @@ function move(xBefore, yBefore, checkerToMove, direction) {
   
   var whiteCheckersCount = 0;
   whiteCheckersCount = getAll(whiteChecker)
-  whiteCheckersCount = redCheckersCount + getAll(whiteKing)
+  whiteCheckersCount = whiteCheckersCount + getAll(whiteKing)
   
   if(redCheckersCount.length === 0) {
     addText("WHITE WON!", {
@@ -832,76 +856,40 @@ function move(xBefore, yBefore, checkerToMove, direction) {
       y: 4,
       color: color`2`
     })
+    const winner = "white"
+    return;
   } else if(whiteCheckersCount.length === 0) {
     addText("RED WON!", {
       x: 4,
       y: 4,
       color: color`2`
     })
+    const winner = "red"
+    return;
   }
 
-  // if(move === 2) {
+  if(move === 2) {
+    var oneMoreMove = 0;
+    oneMoreMove = canMove(xAfter, yAfter)
 
-  //   // Below should be a check to see if a player can capture one more piece with the SAME piece he just moved. TO BE FIXED
-  //   return 0;
+    if(turn === "w" && oneMoreMove === 2) {
+      clearTile(xAfter, yAfter)
+      addSprite(xAfter, yAfter, selectedWhite)
+      captureOneMorePiece = 1;
+      return;
+    } else if(turn === "r" && oneMoreMove === 2) {
+      clearTile(xAfter, yAfter)
+      addSprite(xAfter, yAfter, selectedRed)
+      return;
+    }
     
-  //   var oneMoreMove = 0;
-  //   oneMoreMove = canMove(xAfter, yAfter)
-  
-  //   if(turn === "w" && oneMoreMove === 2) {
-  //     clearTile(xAfter, yAfter)
-  //     addSprite(xAfter, yAfter, selectedWhite)
-  //   } else if(turn === "r" && oneMoreMove === 2) {
-  //     clearTile(xAfter, yAfter)
-  //     addSprite(xAfter, yAfter, selectedRed)
-  //   } else if(turn === "w") {
-      
-  //     var nextChecker = getAll(redKing)[0]
-  //     if(nextChecker) {
-  //       // redKing
-  //     } else {
-  //       nextChecker = getAll(redChecker)[0]
-  
-  //       var moveAllowed = 0;
-  //       moveAllowed = canMove(nextChecker.x, nextChecker.y)
-  //       clearTile(nextChecker.x, nextChecker.y)
-        
-  //       if(moveAllowed !== 0) {
-  //         addSprite(nextChecker.x, nextChecker.y, selectedRed)
-  //         turn = "r"
-  //       } else {
-  //         addSprite(nextChecker.x, nextChecker.y, selectedRedN)
-  //         turn = "r"
-  //       }        
-  //     }
-  //   } else if(turn === "r") {
-      
-  //     var nextChecker = getAll(whiteKing)[0]
-  //     if(nextChecker) {
-  //       // whiteKing
-  //     } else {
-  //       nextChecker = getAll(whiteChecker)[0]
-  
-  //       var moveAllowed = 0;
-  //       moveAllowed = canMove(nextChecker.x, nextChecker.y)
-  //       clearTile(nextChecker.x, nextChecker.y)
-        
-  //       if(moveAllowed !== 0) {
-  //         addSprite(nextChecker.x, nextChecker.y, selectedWhite)
-  //         turn = "w"
-  //       } else {
-  //         addSprite(nextChecker.x, nextChecker.y, selectedWhiteN)
-  //         turn = "w"
-  //       }        
-  //     }
-  //   }
+  }
 
-
-  // } else 
-
-
-    
+  captureOneMorePiece = 0;
+ 
   if(turn === "w") {
+
+    turn = "r"
       
     var nextChecker = getAll(redKing)[0]
     if(nextChecker) {
@@ -911,10 +899,8 @@ function move(xBefore, yBefore, checkerToMove, direction) {
       
       if(moveAllowed !== 0) {
         addSprite(nextChecker.x, nextChecker.y, selectedRKing)
-        turn = "w"
       } else {
         addSprite(nextChecker.x, nextChecker.y, selectedRKingN)
-        turn = "w"
       }  
     } else {
       nextChecker = getAll(redChecker)[0]
@@ -925,13 +911,13 @@ function move(xBefore, yBefore, checkerToMove, direction) {
         
       if(moveAllowed !== 0) {
         addSprite(nextChecker.x, nextChecker.y, selectedRed)
-        turn = "r"
       } else {
         addSprite(nextChecker.x, nextChecker.y, selectedRedN)
-        turn = "r"
       }        
     }
   } else if(turn ==="r") {
+
+    turn = "w"
       
     var nextChecker = getAll(whiteKing)[0]
     if(nextChecker) {
@@ -941,10 +927,8 @@ function move(xBefore, yBefore, checkerToMove, direction) {
       
       if(moveAllowed !== 0) {
         addSprite(nextChecker.x, nextChecker.y, selectedWKing)
-        turn = "w"
       } else {
         addSprite(nextChecker.x, nextChecker.y, selectedWKingN)
-        turn = "w"
       }  
     } else {
       nextChecker = getAll(whiteChecker)[0]
@@ -955,15 +939,9 @@ function move(xBefore, yBefore, checkerToMove, direction) {
       
       if(moveAllowed !== 0) {
         addSprite(nextChecker.x, nextChecker.y, selectedWhite)
-        turn = "w"
       } else {
         addSprite(nextChecker.x, nextChecker.y, selectedWhiteN)
-        turn = "w"
       }        
     }    
   }
 }
-
-afterInput(() => {
-  // Check if one of the players has won
-})
