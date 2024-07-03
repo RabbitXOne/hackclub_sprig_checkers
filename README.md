@@ -1,5 +1,5 @@
 # Checkers made in Sprig
-https://sprig.hackclub.com/share/BEkFYkQMVUeVP5mCKJcG
+https://sprig.hackclub.com/share/lU4bU32SdbamLRDXmU4K
 
 ### Controls
 
@@ -10,15 +10,15 @@ https://sprig.hackclub.com/share/BEkFYkQMVUeVP5mCKJcG
 - `D` - RIGHT
 
 **WHITE PIECE:** 
-- `J` - UP AND LEFT
-- `L` - UP AND RIGHT
+- `J` - UP and LEFT
+- `L` - UP and RIGHT
 
 **RED PIECE:**
-- `J` - DOWN AND LEFT
-- `L` - DOWN AND RIGHT
+- `J` - DOWN and LEFT
+- `L` - DOWN and RIGHT
 
 **RED/WHITE KING:** 
-- `J` - DOWN AND LEFT
-- `L` - DOWN AND RIGHT
-- `I` - UP AND LEFT
-- `K` - UP AND RIGHT
+- `J` - DOWN and LEFT
+- `L` - DOWN and RIGHT
+- `I` - UP and LEFT
+- `K` - UP and RIGHT

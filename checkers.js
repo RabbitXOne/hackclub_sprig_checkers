@@ -872,14 +872,15 @@ function move(xBefore, yBefore, checkerToMove, direction) {
     var oneMoreMove = 0;
     oneMoreMove = canMove(xAfter, yAfter)
 
-    if(turn === "w" && oneMoreMove === 2) {
+    if(turn === "w" && oneMoreMove === 2 && getTile(xAfter, yAfter)[0].type === whiteChecker) {
       clearTile(xAfter, yAfter)
       addSprite(xAfter, yAfter, selectedWhite)
       captureOneMorePiece = 1;
       return;
-    } else if(turn === "r" && oneMoreMove === 2) {
+    } else if(turn === "r" && oneMoreMove === 2 && getTile(xAfter, yAfter)[0].type === redChecker) {
       clearTile(xAfter, yAfter)
       addSprite(xAfter, yAfter, selectedRed)
+      captureOneMorePiece = 1;
       return;
     }
     
