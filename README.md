@@ -1,5 +1,5 @@
 # Checkers made in Sprig
-https://sprig.hackclub.com/share/dmdHY7zsbagn8dWVPGkI
+https://sprig.hackclub.com/share/BEkFYkQMVUeVP5mCKJcG
 
 ### Controls
 
